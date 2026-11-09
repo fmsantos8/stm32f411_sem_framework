@@ -1,0 +1,15 @@
+/build/
+__pycache__/
+/sdkconfig
+/sdkconfig.old
+/Drivers/CMSIS/Include/
+/Drivers/CMSIS/Device/
+/Drivers/STM32F4xx_HAL_Driver/Inc/
+/Drivers/STM32F4xx_HAL_Driver/Src/
+/Drivers/STM32F4xx_HAL_Driver/_htmresc/
+/Drivers/STM32F4xx_HAL_Driver/Release_Notes.html
+
+/Drivers/STM32F4xx_HAL_Driver/.github/
+/Drivers/STM32F4xx_HAL_Driver/CODE_OF_CONDUCT.md
+/Drivers/STM32F4xx_HAL_Driver/CONTRIBUTING.md
+/Drivers/STM32F4xx_HAL_Driver/SECURITY.md

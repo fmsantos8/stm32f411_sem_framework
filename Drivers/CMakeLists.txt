@@ -1,0 +1,22 @@
+# Prefer the usual local Cube layout; an external package is also supported.
+set(STM32F4_SDK_DIR "$ENV{STM32F4_SDK_DIR}" CACHE PATH "STM32CubeF4 v1.28.3 root")
+if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h")
+    set(drivers "${CMAKE_CURRENT_SOURCE_DIR}")
+elseif(STM32F4_SDK_DIR)
+    set(drivers "${STM32F4_SDK_DIR}/Drivers")
+else()
+    message(FATAL_ERROR "Install Drivers with tools/install_drivers.py or set STM32F4_SDK_DIR; see README.md")
+endif()
+set(device "${drivers}/CMSIS/Device/ST/STM32F4xx")
+set(hal "${drivers}/STM32F4xx_HAL_Driver")
+foreach(required "${hal}/Inc/stm32f4xx_hal.h" "${drivers}/CMSIS/Include/core_cm4.h" "${device}/Include/stm32f411xe.h")
+    if(NOT EXISTS "${required}")
+        message(FATAL_ERROR "Incomplete STM32CubeF4: ${required}")
+    endif()
+endforeach()
+target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${hal}/Inc ${drivers}/CMSIS/Include ${device}/Include)
+
+foreach(module hal hal_cortex hal_rcc hal_rcc_ex hal_pwr hal_pwr_ex hal_flash hal_flash_ex hal_flash_ramfunc
+               hal_gpio hal_dma hal_dma_ex hal_tim hal_tim_ex hal_uart hal_i2c hal_i2c_ex)
+    target_sources(${PROJECT_NAME} PRIVATE ${hal}/Src/stm32f4xx_${module}.c)
+endforeach()
